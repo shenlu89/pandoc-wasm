@@ -1,6 +1,6 @@
-# pandoc-wasm-cli
+# pandoc-wasm
 
-[![npm version](https://badge.fury.io/js/pandoc-wasm-cli.svg)](https://badge.fury.io/js/pandoc-wasm-cli)
+[![npm version](https://badge.fury.io/js/pandoc-wasm.svg)](https://badge.fury.io/js/pandoc-wasm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A complete npm package that brings the power of [Pandoc](https://pandoc.org/) to JavaScript environments through WebAssembly. Convert documents between multiple formats with zero dependencies on system binaries.
@@ -20,7 +20,7 @@ A complete npm package that brings the power of [Pandoc](https://pandoc.org/) to
 
 ```bash
 # Install globally
-npm install -g pandoc-wasm-cli
+npm install -g pandoc-wasm
 
 # Use immediately
 pandoc-wasm -f markdown -t html README.md output.html
@@ -29,7 +29,7 @@ pandoc-wasm -f markdown -t html README.md output.html
 ### API Usage
 
 ```javascript
-import pandoc from 'pandoc-wasm-cli';
+import pandoc from 'pandoc-wasm';
 
 // Simple conversion
 const result = await pandoc.convert('# Hello World', {
@@ -51,7 +51,7 @@ console.log(result.output);
 Convert text between formats.
 
 ```typescript
-import { convert } from 'pandoc-wasm-cli';
+import { convert } from 'pandoc-wasm';
 
 const result = await convert(inputText, {
   from: 'markdown',
@@ -70,7 +70,7 @@ const result = await convert(inputText, {
 Convert files (Node.js only).
 
 ```typescript
-import { convertFile } from 'pandoc-wasm-cli';
+import { convertFile } from 'pandoc-wasm';
 
 await convertFile('input.md', 'output.html', {
   from: 'markdown',
@@ -83,7 +83,7 @@ await convertFile('input.md', 'output.html', {
 ### Browser Usage
 
 ```javascript
-import { convertInBrowser } from 'pandoc-wasm-cli/browser';
+import { convertInBrowser } from 'pandoc-wasm/browser';
 
 const result = await convertInBrowser(inputText, {
   from: 'markdown',
@@ -161,13 +161,13 @@ import pandoc from 'pandoc-wasm-cli';
 ### Deno
 
 ```typescript
-import pandoc from 'https://deno.land/x/pandoc_wasm_cli/mod.ts';
+import pandoc from 'https://deno.land/x/pandoc_wasm/mod.ts';
 ```
 
 ### Bun
 
 ```javascript
-import pandoc from 'pandoc-wasm-cli';
+import pandoc from 'pandoc-wasm';
 // Optimized for Bun's fast startup
 ```
 
@@ -175,7 +175,7 @@ import pandoc from 'pandoc-wasm-cli';
 
 ```html
 <script type="module">
-  import { convertInBrowser } from 'https://unpkg.com/pandoc-wasm-cli/dist/browser.mjs';
+  import { convertInBrowser } from 'https://unpkg.com/pandoc-wasm/dist/browser.mjs';
   
   const result = await convertInBrowser(markdown, {
     from: 'markdown',
@@ -189,8 +189,8 @@ import pandoc from 'pandoc-wasm-cli';
 Check out the interactive demo at [demo URL] or run it locally:
 
 ```bash
-git clone https://github.com/your-username/pandoc-wasm-cli
-cd pandoc-wasm-cli/demo
+git clone https://github.com/your-username/pandoc-wasm
+cd pandoc-wasm/demo
 npm install
 npm run dev
 ```
