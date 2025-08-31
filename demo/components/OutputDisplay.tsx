@@ -1,4 +1,4 @@
-import { AlertCircle, CheckCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle, FileText } from 'lucide-react';
 
 interface OutputDisplayProps {
   output: string;
