@@ -11,6 +11,11 @@
       "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     },
+    "./server": {
+      "import": "./dist/server.mjs",
+      "require": "./dist/server.cjs",
+      "types": "./dist/pandoc-server.d.ts"
+    },
     "./browser": {
       "import": "./dist/browser.mjs",
       "types": "./dist/browser.d.ts"

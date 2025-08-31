@@ -1,12 +1,20 @@
-import { PandocWasm } from '../core/pandoc-wasm';
 import { ConvertOptions, PandocResult, FileConvertOptions } from '../types/index';
 
-let globalInstance: PandocWasm | null = null;
+let globalInstance: any = null;
 
-async function getInstance(): Promise<PandocWasm> {
+async function getInstance(): Promise<any> {
   if (!globalInstance) {
-    globalInstance = new PandocWasm();
-    await globalInstance.initialize();
+    if (typeof window !== 'undefined') {
+      // Browser environment
+      const { BrowserPandoc } = await import('../browser');
+      globalInstance = new BrowserPandoc();
+      await globalInstance.initialize();
+    } else {
+      // Server environment
+      const { ServerPandoc } = await import('../server/pandoc-server');
+      globalInstance = new ServerPandoc();
+      await globalInstance.initialize();
+    }
   }
   return globalInstance;
 }

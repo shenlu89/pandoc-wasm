@@ -3,7 +3,7 @@
 import { Command } from 'commander';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
-import { PandocWasm } from './core/pandoc-wasm';
+import { ServerPandoc } from './server/pandoc-server';
 
 const program = new Command();
 
@@ -32,7 +32,7 @@ program
   .option('--quiet', 'Suppress warnings')
   .action(async (input, output, options) => {
     try {
-      const pandoc = new PandocWasm();
+      const pandoc = new ServerPandoc();
       await pandoc.initialize();
 
       // Read input
