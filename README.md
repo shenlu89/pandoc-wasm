@@ -1,56 +1,245 @@
-# `pandoc-wasm`
+# pandoc-wasm-cli
 
-[![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#haskell-wasm:matrix.terrorjack.com)
+[![npm version](https://badge.fury.io/js/pandoc-wasm-cli.svg)](https://badge.fury.io/js/pandoc-wasm-cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The latest version of `pandoc` CLI compiled as a standalone
-`wasm32-wasi` module that can be run by engines like `wasmtime` as
-well as browsers.
+A complete npm package that brings the power of [Pandoc](https://pandoc.org/) to JavaScript environments through WebAssembly. Convert documents between multiple formats with zero dependencies on system binaries.
 
-## [Live demo](https://tweag.github.io/pandoc-wasm)
+## ✨ Features
 
-Stdin on the left, stdout on the right, command line arguments at the
-bottom. No convert button, output is produced dynamically as input
-changes.
+- 🚀 **Universal**: Works in Node.js, Deno, Bun, and browsers
+- 🛠️ **CLI Tool**: Drop-in replacement for native pandoc
+- 📦 **Zero Dependencies**: No system installation required
+- 🎯 **Type Safe**: Full TypeScript support with comprehensive types
+- 🌐 **Cross Platform**: Runs anywhere JavaScript runs
+- ⚡ **Fast**: WebAssembly performance with JavaScript convenience
 
-You're also more than welcome to fetch the
-[`pandoc.wasm`](https://tweag.github.io/pandoc-wasm/pandoc.wasm)
-module and make your own customized app. `pandoc.wasm` is fully
-`wasm32-wasi` compliant and doesn't make use of any JSFFI feature in
-the ghc wasm backend.
+## 🚀 Quick Start
 
-## Building
+### CLI Installation
 
-`pandoc.wasm` is built with 9.12 flavour of ghc wasm backend in CI,
-which can be installed via
-[`ghc-wasm-meta`](https://gitlab.haskell.org/haskell-wasm/ghc-wasm-meta). You
-need at least 9.10 since it's the earliest major version with (my
-non-official) backports for ghc wasm backend's Template Haskell & ghci
-support.
+```bash
+# Install globally
+npm install -g pandoc-wasm-cli
 
-It's built using my
-[fork](https://github.com/haskell-wasm/pandoc/tree/wasm) which is
-based on latest `pandoc` release and patches dependencies, cabal
-config as well as some module code to make things compilable to wasm:
+# Use immediately
+pandoc-wasm -f markdown -t html README.md output.html
+```
 
-- No http client/server functionality. `wasip1` doesn't have proper
-  sockets support anyway, and support for future versions of wasi is
-  not on my radar for now.
-- No lua support. lua requires `setjmp`/`longjmp` which already work
-  in `wasi-libc` to some extent, but that requires wasm exception
-  handling feature which is not supported by `wasmtime` yet.
+### API Usage
 
-Other functionalities should just work, if not feel free to file a bug
-report :)
+```javascript
+import pandoc from 'pandoc-wasm-cli';
 
-## Acknowledgements
+// Simple conversion
+const result = await pandoc.convert('# Hello World', {
+  from: 'markdown',
+  to: 'html',
+  standalone: true
+});
 
-Thanks to John MacFarlane and all the contributors who made `pandoc`
-possible: a fantastic tool that has benefited many developers and is a
-source of pride for the Haskell community!
+console.log(result.output);
+// Output: <!DOCTYPE html><html>...
+```
 
-Thanks to all past efforts of using `asterius` to compile `pandoc` to
-wasm, including but not limited to:
+## 📖 API Reference
 
-- George Stagg's [`pandoc-wasm`](https://github.com/georgestagg/pandoc-wasm)
-- Yuto Takahashi's [`wasm-pandoc`](https://github.com/y-taka-23/wasm-pandoc)
-- My legacy asterius pandoc [demo](https://asterius.netlify.app/demo/pandoc/pandoc.html)
+### Core API
+
+#### `convert(input, options)`
+
+Convert text between formats.
+
+```typescript
+import { convert } from 'pandoc-wasm-cli';
+
+const result = await convert(inputText, {
+  from: 'markdown',
+  to: 'html',
+  standalone: true,
+  toc: true,
+  metadata: {
+    title: 'My Document',
+    author: 'John Doe'
+  }
+});
+```
+
+#### `convertFile(inputPath, outputPath, options)`
+
+Convert files (Node.js only).
+
+```typescript
+import { convertFile } from 'pandoc-wasm-cli';
+
+await convertFile('input.md', 'output.html', {
+  from: 'markdown',
+  to: 'html',
+  standalone: true,
+  createDir: true  // Create output directory if needed
+});
+```
+
+### Browser Usage
+
+```javascript
+import { convertInBrowser } from 'pandoc-wasm-cli/browser';
+
+const result = await convertInBrowser(inputText, {
+  from: 'markdown',
+  to: 'html'
+}, '/path/to/pandoc.wasm');
+```
+
+### CLI Usage
+
+The CLI tool supports all standard Pandoc options:
+
+```bash
+# Basic conversion
+pandoc-wasm -f markdown -t html input.md
+
+# With options
+pandoc-wasm -f markdown -t html --standalone --toc input.md output.html
+
+# Using pipes
+echo "# Hello" | pandoc-wasm -f markdown -t html
+
+# Multiple CSS files
+pandoc-wasm -f markdown -t html --css style1.css --css style2.css input.md
+
+# With metadata
+pandoc-wasm -f markdown -t html -M title:"My Doc" -M author:"John" input.md
+```
+
+## 🎯 Supported Formats
+
+### Input Formats
+- **Markdown**: `markdown`, `gfm`, `commonmark`
+- **Markup**: `html`, `latex`, `rst`, `org`, `textile`
+- **Documents**: `docx`, `odt`, `epub`
+- **Data**: `json`, `csv`
+- **Wiki**: `mediawiki`, `dokuwiki`, `twiki`
+
+### Output Formats
+- **Web**: `html`, `html5`, `epub`
+- **Documents**: `pdf`, `docx`, `odt`, `rtf`
+- **Markup**: `latex`, `markdown`, `rst`, `org`
+- **Presentation**: `beamer`, `revealjs`, `slidy`
+- **Data**: `json`, `plain`
+
+## 🔧 Configuration Options
+
+```typescript
+interface PandocOptions {
+  from?: string;           // Input format
+  to?: string;             // Output format
+  standalone?: boolean;    // Produce standalone document
+  toc?: boolean;          // Include table of contents
+  tocDepth?: number;      // TOC depth (1-6)
+  template?: string;      // Custom template file
+  css?: string[];         // CSS files to include
+  metadata?: Record<string, any>;  // Document metadata
+  variables?: Record<string, string>; // Template variables
+  filters?: string[];     // Pandoc filters
+  luaFilters?: string[]; // Lua filters
+}
+```
+
+## 🌍 Runtime Support
+
+### Node.js
+
+```javascript
+// CommonJS
+const pandoc = require('pandoc-wasm-cli');
+
+// ES Modules
+import pandoc from 'pandoc-wasm-cli';
+```
+
+### Deno
+
+```typescript
+import pandoc from 'https://deno.land/x/pandoc_wasm_cli/mod.ts';
+```
+
+### Bun
+
+```javascript
+import pandoc from 'pandoc-wasm-cli';
+// Optimized for Bun's fast startup
+```
+
+### Browser
+
+```html
+<script type="module">
+  import { convertInBrowser } from 'https://unpkg.com/pandoc-wasm-cli/dist/browser.mjs';
+  
+  const result = await convertInBrowser(markdown, {
+    from: 'markdown',
+    to: 'html'
+  });
+</script>
+```
+
+## 🎮 Demo Application
+
+Check out the interactive demo at [demo URL] or run it locally:
+
+```bash
+git clone https://github.com/your-username/pandoc-wasm-cli
+cd pandoc-wasm-cli/demo
+npm install
+npm run dev
+```
+
+The demo includes:
+- 📁 Drag & drop file upload
+- 🔄 Real-time conversion preview
+- 📚 Format selection with 20+ options
+- 📋 Conversion history
+- 💾 Download converted files
+- 📱 Responsive design
+
+## 🧪 Testing
+
+```bash
+# Run tests
+npm test
+
+# Run with coverage
+npm run test:coverage
+
+# Watch mode
+npm run test:watch
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Pandoc](https://pandoc.org/) - The universal document converter
+- [ghc-wasm](https://gitlab.haskell.org/haskell-wasm/ghc-wasm-meta) - GHC WebAssembly backend
+- [browser_wasi_shim](https://github.com/bjorn3/browser_wasi_shim) - WASI implementation for browsers
+
+## 🔗 Links
+
+- [Pandoc Manual](https://pandoc.org/MANUAL.html)
+- [WebAssembly](https://webassembly.org/)
+- [Live Demo](https://your-demo-url.com)
+
+---
+
+Made with ❤️ by the community
