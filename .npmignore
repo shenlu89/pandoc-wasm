@@ -1,0 +1,11 @@
+src/
+demo/
+.github/
+*.config.js
+*.config.ts
+tsconfig.json
+vitest.config.ts
+.gitignore
+.npmignore
+coverage/
+.nyc_output/
