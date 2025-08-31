@@ -1,5 +1,5 @@
 {
-  "name": "pandoc-wasm",
+  "name": "@mathcheap/pandoc-wasm",
   "version": "1.0.0",
   "description": "Pandoc CLI compiled to WebAssembly - works in Node.js, Deno, Bun, and browsers",
   "main": "dist/index.cjs",
