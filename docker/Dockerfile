@@ -1,5 +1,5 @@
 # Build Pandoc WebAssembly toolchain image
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:22.04
 
 # Prevent interactive prompts during apt operations
 ENV DEBIAN_FRONTEND=noninteractive
