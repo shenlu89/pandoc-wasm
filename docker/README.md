@@ -33,10 +33,10 @@ The primary use case is to build and copy out the optimized `pandoc.wasm` artifa
    docker cp pandoc-container:/pandoc.wasm .
    ```
 
-(Optional) Clean up the stopped container:
-```bash
-docker rm pandoc-container
-```
+4. (Optional) Clean up the stopped container:
+    ```bash
+    docker rm pandoc-container
+    ```
 
 You now have `pandoc.wasm` available on your machine for use with any WASM runtime.
 
