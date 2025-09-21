@@ -14,6 +14,10 @@ The image compiles the `wasm` branch of the `haskell-wasm/pandoc` repository int
 
 Use this image if you want a reproducible, ready-to-run environment for producing a WASM build of Pandoc without setting up the full toolchain on your host.
 
+## Dockerfile
+
+The `Dockerfile` implementation can be found [here](https://github.com/shenlu89/pandoc-wasm/blob/main/docker/Dockerfile). This provides details on how the toolchain is set up and how Pandoc is built.
+
 ## Usage: Extract the compiled binary
 
 The primary use case is to build and copy out the optimized `pandoc.wasm` artifact.
