@@ -1,6 +1,6 @@
 # Pandoc WebAssembly (WASM)
 
-This Docker image provides a self-contained toolchain for building the WebAssembly (WASM) version of Pandoc, the universal document converter.
+This Docker image, part of the [pandoc-wasm](https://github.com/shenlu89/pandoc-wasm) project, provides a self-contained toolchain for building the WebAssembly (WASM) version of Pandoc, the universal document converter.
 
 The image is based on Ubuntu 22.04 and comes with:
 - GHC and Cabal
@@ -16,7 +16,7 @@ Use this image if you want a reproducible, ready-to-run environment for producin
 
 ## Dockerfile
 
-The `Dockerfile` implementation can be found [here](https://github.com/shenlu89/pandoc-wasm/blob/main/docker/Dockerfile). This provides details on how the toolchain is set up and how Pandoc is built.
+This image is built from the [`Dockerfile`](https://github.com/shenlu89/pandoc-wasm/blob/main/docker/Dockerfile) in the `pandoc-wasm` repository. This provides details on how the toolchain is set up and how Pandoc is built.
 
 ## Usage: Extract the compiled binary
 
