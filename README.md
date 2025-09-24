@@ -8,4 +8,4 @@ Docker image is available at https://hub.docker.com/r/shenlu89/pandoc-wasm
 
 ## License
 
-Licensed under [GPL-3.0-or-later](LICENSE).
+Licensed under [GPL-2.0-or-later](LICENSE).
