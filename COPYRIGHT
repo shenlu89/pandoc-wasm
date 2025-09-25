@@ -3,7 +3,7 @@ Pandoc WebAssembly (WASM)
 Copyright (c) 2025 Shen Lu
 
 License:
-- This project is licensed under the GNU General Public License v3.0 or later (GPL-3.0-or-later).
+- This project is licensed under the GNU General Public License v2.0 or later (GPL-2.0-or-later).
 - See the LICENSE file for the full text of the license.
 
 Notes on third-party components:
